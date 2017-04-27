@@ -1,0 +1,24 @@
+{
+  "name": "wba2ss17",
+  "version": "0.0.1",
+  "description": "WBA2 Projekt SS17",
+  "main": "kickoffaufgaben.json",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spacket/WBA2SS17KryutsovaOlbergStelmach.git"
+  },
+  "keywords": [
+    "kickoff"
+  ],
+  "author": "[Team 18] Volha Kryutsova, Christoph Olberg, Valerij Stelmach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Spacket/WBA2SS17KryutsovaOlbergStelmach/issues"
+  },
+  "homepage": "https://github.com/Spacket/WBA2SS17KryutsovaOlbergStelmach#readme"
+}
