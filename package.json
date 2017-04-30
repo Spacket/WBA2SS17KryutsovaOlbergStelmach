@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "WBA2 Projekt SS17",
   "main": "kickoffaufgaben.json",
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^1.1.3"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "test"
