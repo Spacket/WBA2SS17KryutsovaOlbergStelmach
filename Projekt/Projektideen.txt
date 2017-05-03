@@ -1,0 +1,21 @@
+---- Projektidee 1 -> WG-Haushaltsplan
+-
+- Dieses Projekt soll Wohngemeinschaften bei der Planung des Haushalts helfen.
+- Es werden folgende Bereiche abgedeckt: "Küche putzen, Bad putzen, Müll rausbringen". 
+- Jedem Bewohner werden einige Bereiche zugeteilt, diese kann man ändern oder an andere weiter reichen (zB. tauschen).
+- Ein "Reminder" errinert jeden Mitbewohner min. einen Tag vorher über seine Aufgabe.
+- Jeder Bewohner kann nach erfolgreicher Erledigung, die Aufgabe für einen bestimmten Tag "abhaken"
+- Jede Woche/Monat werden die Aufgaben getauscht bzw. weiter gegeben.
+
+
+
+---- Projektidee 2 -> Filmrelease
+-
+- Dieses Projekt soll Nutzern dabei helfen neue Filme zu entdecken bzw. diese daran errinern, dass neue Filme welche ihrer
+- Interessengruppe entsprechen, heraus gekommen sind.
+- Als Nutzer kann man zum Beispiel sein favorisiertes Genre eintragen (z.B. Komödie, Action, Drama, usw), 
+- oder einfach nur den Titel, eines erwarteten Films.
+- Sobald ein bestimmtes Genre oder ein bestimmter Film released wird, bekommt man eine Benachrichtigung.
+- Man kann einstellen wann genau (einen Tag/Woche) einen Benachrichtigung/Errinerung erscheint.
+- Zusätzlich werden alle neuen Filme als "Neuigkeiten" angezeigt (bis zu einem Jahr)
+- (- evtl. zusätzliche Funktion: "In welchem Kino wird der Film [x] gezeigt?" )
