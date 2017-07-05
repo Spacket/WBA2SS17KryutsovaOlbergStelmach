@@ -6,14 +6,18 @@ const router = express.Router();
 var nextUserId = 2;
 var newUserId;
 
+
+
+/*----------------------Neue User ID erstellen----------------------*/
 var getNewUserId = function() {
     newUserId = nextUserId;
     nextUserId ++;
     return newUserId;
-    console.log("aktuell neue ID: " + newUserId);
-    console.log("naechste ID: " + nextUserId);
+    console.log("Aktuell neue User ID: " + newUserId);
+    console.log("Naechste User ID: " + nextUserId);
 }
 
+/*----------------------Prüfe ob User vorhanden----------------------*/
 var validateUser = function(userName) {
   if (userName == "") {
 	  console.log("userName ist leer! Oh nein!");
@@ -21,12 +25,15 @@ var validateUser = function(userName) {
   }
   for(var i = 0; i < data.users.length; i++) {
 	  if (userName === data.users[i].userName) {
-		  console.log("userName Wird schon verwendet! Oh nein!");
+		  console.log("userName wird schon verwendet!");
 		  return false;
 	  }
   }
   return true;
 }
+
+
+/*----------------------Neuen User hinzufügen----------------------*/
 router.post('/', bodyParser.json(), function(req, res){
     console.log(req.body.userName);
 	if(validateUser(req.body.userName)) {
@@ -39,6 +46,18 @@ router.post('/', bodyParser.json(), function(req, res){
 		res.status(400).send("Dieser Name wird schon verwendet / Es wurde kein Name angegeben");
 	}
 });
+
+
+/*----------------------speziellen User ausgeben----------------------*/
+router.get('/:id', function(req, res) {
+    var id = parseInt(req.params.id);
+    var user = data.users.filter(function (u){
+                                 return u.id == id
+                                 });
+    res.status(200).json(user);
+});
+
+
 
 router.get('/', function(req, res) {
     var allUserNames = [];

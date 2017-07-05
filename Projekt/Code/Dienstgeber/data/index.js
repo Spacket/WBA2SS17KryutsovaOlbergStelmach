@@ -1,6 +1,6 @@
 const users = new Array();
 exports.users = [
-    
+
     {
         "userName" : "bobby1",
         "id" : 0,
@@ -8,7 +8,7 @@ exports.users = [
             "test1",
             "Test"
         ],
-   
+
     },
         {
         "userName" : "dieter",
@@ -17,6 +17,12 @@ exports.users = [
             "test2",
             "Toaster"
         ],
-   
+
     }
+]
+
+const watchlists = new Array();
+export.watchlists = [
+
+
 ]
