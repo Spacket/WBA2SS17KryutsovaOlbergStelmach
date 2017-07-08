@@ -1,14 +1,15 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const resourceName = "users";
+const express = require("express");
 const router = express.Router();
+const bodyParser = require("body-parser");
+const ressourceName = "users";
 
 var nextUserId = 2;
 var newUserId;
 
+/*----------------------User Login----------------------*/
 
 
-/*----------------------Neue User ID erstellen----------------------*/
+/*----------------------Neue User ID erstellen Passwort feht noch----------------------*/
 var getNewUserId = function() {
     newUserId = nextUserId;
     nextUserId ++;

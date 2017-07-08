@@ -3,49 +3,47 @@ const bodyParser = require('body-parser');
 const resourceName = "watchlists";
 const router = express.Router();
 
-var nextWatchlistId = 2;
-var newWatchlistId;
+var watchlistId = 0;
 
 
 
-/*----------------------Neue Watchlist ID erstellen----------------------*/
-var getWatchlistId = function() {
-    newWatchlistId = nextWatchlistId;
-    nextWatchlistId ++;
-    return newWatchlistId;
-    console.log("Aktuell neue Watchlist ID: " + newWatchlistId);
-    console.log("Naechste Watchlist ID: " + nextWatchlistId);
-}
-
-/*----------------------Prüfe ob Watchlist Id schon vorhanden----------------------*/
-var validateWatchlist = function(watchlistID) {
-  if (watchlist == "") {
-	  console.log("Watchlist ID ist leer! Oh nein!");
-	  return false;
-  }
-  for(var i = 0; i < data.watchlists.length; i++) {
-	  if (watchlistID === data.watchlists[i].watchlistID) {
-		  console.log("watchlistID ist schon belegt!");
-		  return false;
-	  }
-  }
-  return true;
-}
-
-
-/*----------------------Neue Watchlist hinzufügen----------------------*/
-router.post('/', bodyParser.json(), function(req, res){
-    console.log(req.body.watchlistID);
-	if(validateWatchlist(req.body.watchlistID)) {
-        req.body.id = getWatchlistId();
-		console.log(req.body);
-		res.status(200).json( { uri: req.protocol + "://" + req.headers.host + "/" + resourceName + "/" + req.body.id });
-        data.users.push(req.body);
-		console.log("Watchlist angelegt!");
-	} else {
-		res.status(400).send("ID belegt / nicht angegeben");
-	}
+/*----------------------Neue Watchlist hinzufügen und an User "binden"----------------------*/
+router.post('/:user_id', bodyParser.json(), function(req, res){
+	if(validateUser(req.body.userName) == 0) {
+        req.body.watchlist_id = watchlistId++;
+				req.body.user_id = parseInt(req.params.user_id);
+				req.body.movie = [];
+				console.log(req.body);
+				data.watchlist.push(req.body);
+				res.status(200).json({uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + req.body.watchlist_id})
+		}else{
+				res.status(400).type('text').send('User nicht vorhanden !');
+		}
 });
+
+/*----------------------Filme in Watchlist speichern----------------------*/
+router.put('/:id/:id_watchlist/:movie', function(req,res){
+var t = 0;
+
+    for(var i= 0; i <  ; i++){
+        if(parseInt(req.params.id) == data.watchlists[i].user_id && parseInt(req.params.id_watchlist) == data.watchlists[i].watchlist_id){
+                console.log("user id:"+req.params.id+"watchlist_id:"+req.params.id_watchlist);
+                data.watchlists[i].movies.push(req.params.movie);  // Film über API holen
+                res.status(200).send(data.watch4[i].movie);
+                i = watchlistId - 1;
+            }
+      }
+
+      if (parseInt(req.params.id) >= data.count) {
+        res.status(400).type('text').send('User nicht vorhanden !');
+        t = 1;
+      }
+
+      if (parseInt(req.params.id_watchlist) >= watchlistId && t == 0) {
+        res.status(400).type('text').send('Watchlist nicht vorhanden !');
+      }
+});
+
 
 
 /*----------------------Watchlist ausgeben----------------------*/
