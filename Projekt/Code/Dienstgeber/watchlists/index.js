@@ -8,28 +8,29 @@ var watchlistId = 0;
 
 
 /*----------------------Neue Watchlist hinzufügen und an User "binden"----------------------*/
-router.post('/:user_id', bodyParser.json(), function(req, res){
+/* Wahrscheinlich dicker Denkfehler
+router.post('/users/:id', bodyParser.json(), function(req, res){
 	if(validateUser(req.body.userName) == 0) {
-        req.body.watchlist_id = watchlistId++;
-				req.body.user_id = parseInt(req.params.user_id);
-				req.body.movie = [];
+        req.body.users.watchlist.watchlist_id = watchlistId++;
+				req.body.users.id = parseInt(req.params.id);
+				req.body.users.watchlist = [];
 				console.log(req.body);
-				data.watchlist.push(req.body);
-				res.status(200).json({uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + req.body.watchlist_id})
+				data.users.watchlist.push(req.body);
+				res.status(200).json({uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + req.body.users.watchlist.watchlist_id})
 		}else{
 				res.status(400).type('text').send('User nicht vorhanden !');
 		}
 });
-
+*/
 /*----------------------Filme in Watchlist speichern----------------------*/
-router.put('/:id/:id_watchlist/:movie', function(req,res){
+router.put('/:id/:/:movie', function(req,res){
 var i = 0;
 
     for(var i= 0; i < watchlistId  ; i++){
-        if(parseInt(req.params.id) == data.watchlists[i].user_id && parseInt(req.params.id_watchlist) == data.watchlists[i].watchlist_id){
+        if(parseInt(req.params.id) == data.users[i].watchlist.watchlist_id && parseInt(req.params.watchlist_id) == data.users[i].watchlist.watchlist_id){
                 console.log("user id:"+req.params.id+"watchlist_id:"+req.params.id_watchlist);
-                data.watchlists[i].movies.push(req.params.movie);  // Film über API holen
-                res.status(200).send(data.watch4[i].movie);
+                data.users[i].watchlist.push(req.params.movie);  // Film über API holen
+                res.status(200).send(data.users[i].watchlist);
                 i = watchlistId - 1;
             }
       }
@@ -49,7 +50,7 @@ var i = 0;
 /*----------------------Watchlist ausgeben----------------------*/
 router.get('/:id', function(req, res) {
     var id = parseInt(req.params.id);
-    var watchlist = data.watchlistID.filter(function (w){
+    var watchlist = data.users.watchlist.watchlist_id.filter(function (w){
                                  return w.id == id
                                  });
     res.status(200).json(watchlist);
