@@ -23,9 +23,9 @@ router.post('/:user_id', bodyParser.json(), function(req, res){
 
 /*----------------------Filme in Watchlist speichern----------------------*/
 router.put('/:id/:id_watchlist/:movie', function(req,res){
-var t = 0;
+var i = 0;
 
-    for(var i= 0; i <  ; i++){
+    for(var i= 0; i < watchlistId  ; i++){
         if(parseInt(req.params.id) == data.watchlists[i].user_id && parseInt(req.params.id_watchlist) == data.watchlists[i].watchlist_id){
                 console.log("user id:"+req.params.id+"watchlist_id:"+req.params.id_watchlist);
                 data.watchlists[i].movies.push(req.params.movie);  // Film über API holen
@@ -36,10 +36,10 @@ var t = 0;
 
       if (parseInt(req.params.id) >= data.count) {
         res.status(400).type('text').send('User nicht vorhanden !');
-        t = 1;
+        i = 1;
       }
 
-      if (parseInt(req.params.id_watchlist) >= watchlistId && t == 0) {
+      if (parseInt(req.params.id_watchlist) >= watchlistId && i == 0) {
         res.status(400).type('text').send('Watchlist nicht vorhanden !');
       }
 });

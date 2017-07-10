@@ -7,9 +7,9 @@ var nextUserId = 2;
 var newUserId;
 
 /*----------------------User Login----------------------*/
+//Optional
 
-
-/*----------------------Neue User ID erstellen Passwort feht noch----------------------*/
+/*----------------------Neue User ID erstellen (Passwort fehlt noch)----------------------*/
 var getNewUserId = function() {
     newUserId = nextUserId;
     nextUserId ++;

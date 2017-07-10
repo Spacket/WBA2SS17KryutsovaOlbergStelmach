@@ -22,4 +22,12 @@ exports.users = [
 ]
 
 const watchlists = new Array();
-export.watchlists = []
+export.watchlists = [
+
+
+      
+
+
+
+
+]
