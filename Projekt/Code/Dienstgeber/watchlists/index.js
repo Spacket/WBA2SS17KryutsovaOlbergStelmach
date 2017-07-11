@@ -23,17 +23,17 @@ router.post('/users/:id', bodyParser.json(), function(req, res){
 });
 */
 /*----------------------Filme in Watchlist speichern----------------------*/
-router.put('/:id/:/:movie', function(req,res){
-var i = 0;
-
-    for(var i= 0; i < watchlistId  ; i++){
-        if(parseInt(req.params.id) == data.users[i].watchlist.watchlist_id && parseInt(req.params.watchlist_id) == data.users[i].watchlist.watchlist_id){
-                console.log("user id:"+req.params.id+"watchlist_id:"+req.params.id_watchlist);
-                data.users[i].watchlist.push(req.params.movie);  // Film über API holen
+router.put('/:id/:movie', function(req,res){
+console.log("bla");
+    for(var i= 0; i < users.length  ; i++){
+        if(parseInt(req.params.id) == data.users[i].watchlist) {
+                console.log("user id:"+req.params.id);
+                data.users[i].watchlist.push(req.params.movie); 
                 res.status(200).send(data.users[i].watchlist);
-                i = watchlistId - 1;
+                
             }
-      }
+    };
+      
 
       if (parseInt(req.params.id) >= data.count) {
         res.status(400).type('text').send('User nicht vorhanden !');
@@ -43,6 +43,7 @@ var i = 0;
       if (parseInt(req.params.id_watchlist) >= watchlistId && i == 0) {
         res.status(400).type('text').send('Watchlist nicht vorhanden !');
       }
+
 });
 
 
