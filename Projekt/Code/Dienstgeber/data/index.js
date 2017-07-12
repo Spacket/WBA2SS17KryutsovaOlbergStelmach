@@ -3,36 +3,30 @@ exports.users = [
 
     {
         "userName" : "bobby1",
-        "id" : 0,
-        "watchlist" :[
-          "Shooter"
-        ]
+        "user_id" : 0
     },
         {
         "userName" : "dieter",
-        "id" : 1,
-        "watchlist" : [
-          "Matrix"
-        ]
-
+        "id" : 1
     }
 ]
 
-/*
-const watchlists = new Array();
-exports.watchlists = [
+
+const favorites = new Array();
+exports.favorites = [
   {
-    "watchlist_id" : 0,
-      "watchlist" : [
+    "favorites_id" : 0,
+    "user_id",
+      "movies" : [
         "Shooter"
       ],
   },
 
   {
-    "watchlist_id" : 1,
-      "watchlist" : [
+    "favorites_id" : 1,
+    "user_id",
+      "movies" : [
         "Matrix"
       ],
   },
 ]
-*/

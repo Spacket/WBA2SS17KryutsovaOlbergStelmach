@@ -1,26 +1,80 @@
 const express = require('express');
-var app = express();
+var dn = express();
 var request = require('request');
 var fs = require('fs');
+var http = require ('http');
 //var genre = require('./endpoints/genres.json');
-global.data = require("./data");
 var bodyparser = require('body-parser');
-const users = require('./users');
-const watchlists = require('./watchlists')
 const router = express.Router();
 
-app.use('/users', users);
+/*----------Dienstgeber Ziel definieren---------*/
 
-
-//const movie = require('./p_filminfo');
-
-
+var dgHost ='http://localhost';
+var dgPort ='3000';
+var dgURL = dgHost + ':' dgPort;
 
 
 const settings = {
-
-    port: 3000
+    port: 8080
 };
+
+/*---------Funktionen Dienstgeber---------*/
+
+//get User
+dn.get('/users',function(req, res){
+  var url = dgURL+ '/users';
+   request(url, function(err, response, body){
+     body = JSON.parse(body);
+     res.json(body)
+   })
+});
+
+//post User
+dn.post('/users', bodyParser.json(), function(req, res){
+  var url = dgURL+ '/users';
+  var userData = req.body;
+
+    var options = {
+        uri: url,
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        json: userData
+      }
+    request(options, function(err, response, body){
+      res.json(body);
+    });
+});
+
+//put Favoriten
+dn.put('/favorites/:user_id/:favorites_id/:movie', bodyParser.json(),function(req,res){
+  var type = "search/movie";
+  var url2 = main + type + api_key_v3 + lang + q + req.params.movie + pages + adult_f;
+    request(url2, function(error, response, body){
+      var apiJSON = JSON.parse(body);
+
+      var datas = {
+        name: apiJSON.title,
+        genres: apiJSON.genre_ids[]
+      };
+
+      console.log(data);
+      var url = dgURL +'/favorites/'+req.params.user_id +'/'+req.params.favorites_id;
+
+      var options ={
+        uri:url,
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        json : datas
+      };
+      request(options,function(err,response,body){
+        res.json(body)
+      });
+    });
+  });
 
 //+++++++++++++++++++++++++Request URL+++++++++++++++++++++++++
 
@@ -34,16 +88,10 @@ var lang = "&language=en-US";
 var q ="&query=";
 var sort_pop = "&sort_by=popularity.desc";
 
-//+++++++++++++++++++++++++ User Account ++++++++++++++++++++++++++
-
-
-
-
-
 //+++++++++++++++++++++++++GET Funktionen++++++++++++++++++++++++++
 
 // get random movie (Discover by best rating)
-app.get('/discover_movie', function(req, res){
+dn.get('/discover_movie', function(req, res){
 
     var discover_movie = main +'discover/movie'+api_key_v3+'&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
 
@@ -69,7 +117,7 @@ app.get('/discover_movie', function(req, res){
 });
 
 //----------------//Find specific movie [EXTERNAL via ID]
-app.get('/:movie_id', function(req, res){
+dn.get('/:movie_id', function(req, res){
     var movie_id = req.params.movie_id;
     var type = "find/";
     var type_2 = "&external_source=imdb_id";
@@ -97,7 +145,7 @@ app.get('/:movie_id', function(req, res){
 });
 
 //Find specific movie [INTERNAL]
-app.get('/search/movie/:movie_title', function(req, res){
+dn.get('/search/movie/:movie_title', function(req, res){
     var movie_title = req.params.movie_title;
     var type = "search/movie";
     var url = main + type + api_key_v3 + lang + q + movie_title + pages + adult_f;
@@ -124,7 +172,7 @@ app.get('/search/movie/:movie_title', function(req, res){
 });
 
 //Movie Info
-app.get('/movie/:movie_id', function(req, res){
+dn.get('/movie/:movie_id', function(req, res){
    var movie_id = req.params.movie_id;
     var type = "movie/";
     var url = main + type + movie_id + api_key_v3 + lang;
@@ -151,7 +199,7 @@ request(url, function(error, response, body){
 });
 
 // Get similar movies
-app.get('/movie/similar/:movie_id', function(req, res){
+dn.get('/movie/similar/:movie_id', function(req, res){
    var movie_id = req.params.movie_id;
     var type = "movie/";
     var type_2 = ":movie_id"
@@ -180,7 +228,7 @@ request(url, function(error, response, body){
 });
 
 // Find people
-app.get('/search/person/:person', function(req, res){
+dn.get('/search/person/:person', function(req, res){
     var person = req.params.person;
     var type = "search/person/";
     var url = main + type + api_key_v3 + lang + q + person + pages + adult_f;
@@ -207,7 +255,7 @@ app.get('/search/person/:person', function(req, res){
 });
 
 // Search by keywords
-app.get('/search/keyword/:keyword', function(req, res){
+dn.get('/search/keyword/:keyword', function(req, res){
     var keyword = req.params.keyword;
     var type = "search/keyword/";
     var url = main + type + api_key_v3 + q + keyword + pages;
@@ -234,7 +282,7 @@ app.get('/search/keyword/:keyword', function(req, res){
 });
 
 // Discover movies by Genre
-app.get('/discover/movie/genre/:genre', function(req, res){
+dn.get('/discover/movie/genre/:genre', function(req, res){
     var genre = req.params.genre;
 
         if(genre == "action"){
@@ -320,7 +368,7 @@ app.get('/discover/movie/genre/:genre', function(req, res){
 });
 
 // GET Release Date by ID
-app.get('/movie/release/:r_movie_id', function(req, res){
+dn.get('/movie/release/:r_movie_id', function(req, res){
     var r_movie_id = req.params.r_movie_id;
     var type = "movie/";
     var url = main + type + r_movie_id+"/release_dates"+api_key_v3;
@@ -347,35 +395,7 @@ app.get('/movie/release/:r_movie_id', function(req, res){
 });
 
 
-//+++++++++++++++++++++++++POST Funktionen+++++++++++++++++++++++++++
-app.post('/', function(req, res){
-});
 
-//++++++++++++++++++++++++++PUT Funktionen++++++++++++++++++++++++++
-app.put('/', function(req, res){
-});
-
-//++++++++++++++++++++++++++DEL Funktionen+++++++++++++++++++++++++++
-app.delete('/', function(req, res){
-});
-
-
-//Errorhandler
-app.use(function(err,req,res,next){
-    console.error(err.stack);
-    res.end(err.status + ' ' + err.messages);
-});
-
-
-//Errorlog mit Zeitangabe
-app.use(function (req,res,next){
-    console.log('Time: %d' + 'Request-Pfad: ' + req.path, Date.now());
-    next();
-});
-
-//app.use("/p_filminfo", movie)
-
-
-app.listen(settings.port, function(){
-           console.log("Dienstgeber ist nun auf Port "+settings.port+" verfügbar.");
+dn.listen(settings.port, function(){
+           console.log("Dienstnutzer ist nun auf Port "+settings.port+" verfügbar.");
 });
