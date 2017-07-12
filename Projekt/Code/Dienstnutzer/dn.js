@@ -26,11 +26,21 @@ dn.get('/users',function(req, res){
    request(url, function(err, response, body){
      body = JSON.parse(body);
      res.json(body)
-   })
+   });
+});
+
+//get User by ID
+dn.get('/users/:user_id',function(req, res){
+  var userID = req.params.user_id;
+  var url = dgURL+ '/users/' + userID;
+    request.get(url, function(err, response, body){
+      body = JSON.parse(body);
+      res.json(body)
+    });
 });
 
 //post User
-dn.post('/users/:user_id', bodyparser.json(), function(req, res){
+dn.post('/users', bodyparser.json(), function(req, res){
   var url = dgURL+ '/users';
   var userData = req.body;
 

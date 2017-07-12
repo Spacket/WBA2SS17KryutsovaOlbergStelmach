@@ -37,14 +37,3 @@ dg.use(function (req,res,next){
 dg.listen(settings.port, function(){
            console.log("Dienstgeber ist nun auf Port "+settings.port+" verfügbar.");
 });
-
-
-/*----------Funktion um die beliebtesten Genres des Users zu finden----------*/
-/*dg.get("", function(req, res){
-  for(var i=0; i< data.users.lengt; i++){
-      if(parseInt(req.params.id) == data.users[i].id){
-        //algo um favliste zu durchsuchen
-      }
-  }
-});
-*/

@@ -6,7 +6,6 @@ const router = express.Router();
 var favID = 0;
 
 /*----------------------Neue Favorites hinzufügen und an User "binden"----------------------*/
-
 router.post('/users/:user_id', bodyParser.json(), function(req, res){
   if(validateUser(req.params.user_id)==0){
     req.body.favorites_id = favID++;
@@ -22,9 +21,8 @@ router.post('/users/:user_id', bodyParser.json(), function(req, res){
 
 
 /*----------------------Filme in Favorites speichern----------------------*/
-
-router.put('/:user_id/:favorites_id/:movie',function(req,res){ //in der URL anders nennen?
-  for(var i=0; i<data.favorites.lenght ; i++){
+router.put('/:user_id/:favorites_id/:movie',function(req,res){
+  for(var i=0; i<data.favorites.length ; i++){
     if(parseInt(req.params.user_id)== data.favorites[i].user_id && parseInt(req.params.favorites_id) == data.favorites[i].favorites_id){
         data.favorites[i].movies.push(req.params.movie);
         res.status(200).send(data.favorites[i].movies);
@@ -36,6 +34,16 @@ router.put('/:user_id/:favorites_id/:movie',function(req,res){ //in der URL ande
   }
   if(parseInt(req.params.user_id) >= data.users.length){
     res.status(400).type('text').send('Fehler!!! User nicht vorhanden');
+  }
+});
+
+
+/*----------Funktion um die beliebtesten Genres des Users zu finden----------*/
+router.get("/:user_id/:favorites_id", function(req, res){
+  for(var i=0; i< data.favorites.length; i++){
+      if(parseInt(req.params.id) == data.users[i].id){
+
+      }
   }
 });
 
