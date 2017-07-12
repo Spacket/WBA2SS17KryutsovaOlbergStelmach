@@ -10,8 +10,8 @@ const router = express.Router();
 /*----------Dienstgeber Ziel definieren---------*/
 
 var dgHost ='http://localhost';
-var dgPort ='3000';
-var dgURL = dgHost + ':' dgPort;
+var dgPort =3000;
+var dgURL = dgHost + ':' +dgPort;
 
 
 const settings = {
@@ -30,7 +30,7 @@ dn.get('/users',function(req, res){
 });
 
 //post User
-dn.post('/users', bodyParser.json(), function(req, res){
+dn.post('/users/:user_id', bodyparser.json(), function(req, res){
   var url = dgURL+ '/users';
   var userData = req.body;
 
@@ -47,19 +47,19 @@ dn.post('/users', bodyParser.json(), function(req, res){
     });
 });
 
-//put Favoriten
-dn.put('/favorites/:user_id/:favorites_id/:movie', bodyParser.json(),function(req,res){
+//put Favorites
+dn.put('/favorites/:user_id/:favorites_id/:movie', bodyparser.json(),function(req,res){
   var type = "search/movie";
   var url2 = main + type + api_key_v3 + lang + q + req.params.movie + pages + adult_f;
     request(url2, function(error, response, body){
       var apiJSON = JSON.parse(body);
 
       var datas = {
-        name: apiJSON.title,
-        genres: apiJSON.genre_ids[]
+        name: apiJSON.results[0].title,
+        genres: apiJSON.results[0].genre_ids
       };
 
-      console.log(data);
+      console.log(datas);
       var url = dgURL +'/favorites/'+req.params.user_id +'/'+req.params.favorites_id;
 
       var options ={

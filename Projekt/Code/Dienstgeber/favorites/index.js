@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const ressourceName = "favorites";
 const router = express.Router();
 
-var favID = o;
+var favID = 0;
 
 /*----------------------Neue Favorites hinzufügen und an User "binden"----------------------*/
 
@@ -11,7 +11,7 @@ router.post('/users/:user_id', bodyParser.json(), function(req, res){
   if(validateUser(req.params.user_id)==0){
     req.body.favorites_id = favID++;
     req.body.user_id = parseInt(req.params.user_id);
-    req.body.movies[];
+    req.body.favorites.movies = [];
     console.log(req.body);
     data.favorites.push(req.body);
     res.status(200).json({/*uri zeugs*/})

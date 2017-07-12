@@ -1,6 +1,6 @@
 const express = require('express');
 const users = require('./users');
-const watchlists = require('./watchlists')
+const watchlists = require('./favorites')
 const router = express.Router();
 
 var dg = express();
@@ -40,10 +40,11 @@ dg.listen(settings.port, function(){
 
 
 /*----------Funktion um die beliebtesten Genres des Users zu finden----------*/
-dg.get("", function(req, res){
-  for(var i=o, i< data.users.lengt, i++){
+/*dg.get("", function(req, res){
+  for(var i=0; i< data.users.lengt; i++){
       if(parseInt(req.params.id) == data.users[i].id){
         //algo um favliste zu durchsuchen
       }
   }
 });
+*/
