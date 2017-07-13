@@ -18,7 +18,8 @@ exports.favorites = [
     "favorites_id" : 0,
     "user_id": 0,
       "movies" : [
-        "Shooter"
+        "Shooter",
+        "genres": [28,18,9648,53,80]
       ],
   },
 
@@ -26,7 +27,8 @@ exports.favorites = [
     "favorites_id" : 1,
     "user_id": 1,
       "movies" : [
-        "Matrix"
+        "The Matrix",
+        "genres":[28,878]
       ],
   },
 ]
