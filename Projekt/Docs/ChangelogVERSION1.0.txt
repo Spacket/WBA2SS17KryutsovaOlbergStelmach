@@ -1,0 +1,34 @@
+﻿###############################################################################
+#################################VERSION 1.0#################################
+###############################################################################
+
+################
+#OVERVIEW
+################
+
+#Allgemein
+*Code wurde überarbeitet und an Architekturvorgabe angepasst
+*Dateinstruktur geändert
+*Von Atom auf Webstorm umgestiegen
+*Dienstnutzer mit node dienstnutzer.js ausführen
+*Dienstgeber mit npm start ausführen
+
+################
+
+#Dienstgeber
+*Dienstgeber Anwendungslogik geschrieben
+*Sucht das Genre, welches am meisten in den Favoriten des Users vorkommen
+*Methoden welche im Dienstgeber standen und nicht dahin gehörten wurden in den Dienstnutzer ausgelagert
+*Daten wie User und Favoriten werden "im Dienstgeber gespeichert"
+*Dienstgeber auf Port 3000 gesetzt
+
+################
+
+#Dienstnutzer
+*greift auf externen Webservice zu
+*gibt per request Daten an den Dienstgeber
+*holt sich per request Daten vom Dienstgeber
+*gibt am Ende 10 Recommendations nach Rating sortiert aus
+*läuft auf Port 8080
+
+################
