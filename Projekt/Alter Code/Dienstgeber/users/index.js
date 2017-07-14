@@ -9,16 +9,21 @@ var nextUserId = 2;
 /*----------------------Neuen User hinzufügen----------------------*/
 router.post('/', bodyParser.json(), function(req, res){
     console.log(req.body.userName);
+    var userName = req.body.userName;
 	   if(validateUser(req.body.userName)) {
-        req.body.user_id = nextUserId++;
-		      console.log(req.body);
-            data.users.push(req.body);
-		        res.status(200).json( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + req.body.user_id });
+	      console.log(req.body);
+        var newUser = {
+          "userName" : req.body.userName,
+          "user_id" : nextUserId++,
+          "favorites" : []
+        }
+        data.users.push(newUser);
+        res.status(200).json( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + req.body.user_id });
 
-		          console.log("User " + req.body.userName + " hinzugefuegt! Neue Useranzahl: " + data.users.length);
-	           } else {
-		             res.status(400).send("Dieser Name wird schon verwendet / Es wurde kein Name angegeben");
-	              }
+        console.log("User " + req.body.userName + " hinzugefuegt! Neue Useranzahl: " + data.users.length);
+        } else {
+          res.status(400).send("Dieser Name wird schon verwendet / Es wurde kein Name angegeben");
+    }
 });
 
 
@@ -45,12 +50,14 @@ var validateUser = function(userName) {
 	  console.log("userName ist leer! Oh nein!");
 	  return false;
   }
-  for(var i = 0; i < data.users.length; i++) {
-	  if (userName === data.users[i].userName) {
-		  console.log("userName wird schon verwendet!");
-		  return false;
-	  }
+
+  var user = data.users.filter(function(usr) {return usr.userName === userName});
+
+  if (user.length > 0) {
+	  console.log("userName wird schon verwendet!");
+	  return false;
   }
+
   return true;
 };
 

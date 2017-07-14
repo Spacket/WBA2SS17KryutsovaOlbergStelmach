@@ -43,6 +43,7 @@ dn.get('/users/:user_id',function(req, res){
 dn.post('/users', bodyparser.json(), function(req, res){
   var url = dgURL+ '/users';
   var userData = req.body;
+  console.log(req.body);
 
     var options = {
         uri: url,
@@ -51,28 +52,30 @@ dn.post('/users', bodyparser.json(), function(req, res){
           'Content-Type':'application/json'
         },
         json: userData
-      }
+    };
     request(options, function(err, response, body){
       res.json(body);
     });
 });
 
 //put Favorites
-dn.put('/favorites/:user_id/:favorites_id/:movie', bodyparser.json(),function(req,res){
+dn.put('/favorites/:user_id', bodyparser.json(),function(req,res){
   var type = "search/movie";
-  var url2 = main + type + api_key_v3 + lang + q + req.params.movie + pages + adult_f;
-    request(url2, function(error, response, body){
+  var url2 = main + type + api_key_v3 + lang + q + req.body.movie + pages + adult_f;
+    request(url2, function(err, response, body){
+      if(err) return res.status(400).send(response);
+
       var apiJSON = JSON.parse(body);
 
       var datas = {
-        name: apiJSON.results[0].title,
-        genres: apiJSON.results[0].genre_ids
+        "name": apiJSON.results[0].title,
+        "genres": apiJSON.results[0].genre_ids
       };
 
       console.log(datas);
-      var url = dgURL +'/favorites/'+req.params.user_id +'/'+req.params.favorites_id;
+      var url = dgURL +'/favorites/'+req.params.user_id;
 
-      var options ={
+      var options = {
         uri:url,
         method: 'PUT',
         headers: {
@@ -80,10 +83,31 @@ dn.put('/favorites/:user_id/:favorites_id/:movie', bodyparser.json(),function(re
         },
         json : datas
       };
+
       request(options,function(err,response,body){
         res.json(body)
       });
     });
+  });
+
+  // get favorite genre)
+  dn.get('/discover_movie/:user_id', function(req, res){
+    request.get(dgURL +'/favorites/genre/'+req.params.user_id, function (error, response, body) {
+        if(error) return res.status(400).send(error);
+
+        var genre = JSON.parse(response.body).genre;
+
+          var discover_movie = main +'discover/movie'+api_key_v3+'&language=en-US&with_genres=' + genre + '&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
+          request(discover_movie, function(error2, response2, body2){
+              if(!error2 && response2.statusCode==200){
+                  var data2 = JSON.parse(body2);
+                  var newData = [];
+                  for(var i = 0; i < 10; i++) newData[i] = data2.results[i];
+                  res.send({"movies":newData});
+              }
+          });
+
+      });
   });
 
 //+++++++++++++++++++++++++Request URL+++++++++++++++++++++++++
@@ -100,31 +124,6 @@ var sort_pop = "&sort_by=popularity.desc";
 
 //+++++++++++++++++++++++++GET Funktionen++++++++++++++++++++++++++
 
-// get random movie (Discover by best rating)
-dn.get('/discover_movie', function(req, res){
-
-    var discover_movie = main +'discover/movie'+api_key_v3+'&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
-
-    request(discover_movie, function(error, response, body){
-        if(!error && response.statusCode==200){
-            var data = JSON.parse(body);
-            var obj = JSON.stringify(data);
-
-
-        fs.writeFile(__dirname+"/input_data.json",obj, function(err){
-            if (err)throw err;
-          });
-        }
-        fs.readFile("input_data.json", 'UTF8', function(err, rep){
-            if(rep){
-                res.type('json').send(rep);
-            }
-            else {
-                res.status(404).type("text").send("Keine Filme verfügbar!");
-            }
-        });
-});
-});
 
 //----------------//Find specific movie [EXTERNAL via ID]
 dn.get('/:movie_id', function(req, res){
