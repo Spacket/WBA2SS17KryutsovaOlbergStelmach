@@ -3,7 +3,6 @@ var dn = express();
 var request = require('request');
 var fs = require('fs');
 var http = require ('http');
-//var genre = require('./endpoints/genres.json');
 var bodyparser = require('body-parser');
 const router = express.Router();
 
@@ -20,7 +19,7 @@ const settings = {
 
 /*---------Funktionen Dienstgeber---------*/
 
-//get User
+//get Users
 dn.get('/users',function(req, res){
     var url = dgURL+ '/users';
     request(url, function(err, response, body){
@@ -122,7 +121,7 @@ var lang = "&language=en-US";
 var q ="&query=";
 var sort_pop = "&sort_by=popularity.desc";
 
-//+++++++++++++++++++++++++GET Funktionen++++++++++++++++++++++++++
+//+++++++++++++++++++++++++GET Funktionen API++++++++++++++++++++++++++
 
 
 //----------------//Find specific movie [EXTERNAL via ID]

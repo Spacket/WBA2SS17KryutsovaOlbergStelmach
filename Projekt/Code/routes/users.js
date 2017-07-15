@@ -6,8 +6,10 @@ var nextUserId = 2;
 /*----------------------Neuen User hinzufügen----------------------*/
 router.post('/',  function(req, res){
     console.log(req.body.userName);
+    
     if(validateUser(req.body.userName)) {
         console.log(req.body);
+        
         var newUser = {
             "userName" : req.body.userName,
             "user_id" : nextUserId++,
@@ -17,15 +19,16 @@ router.post('/',  function(req, res){
         data.users.push(newUser);
 
         console.log(data.users);
-        res.status(200).send( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + req.body.user_id });
+        res.status(200).send( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + nextUserId});
 
-        console.log("User " + req.body.userName + " hinzugefuegt! Neue Useranzahl: " + data.users.length);
+        
+
+        console.log("User " + req.body.userName + " hinzugefuegt!");
+        console.log("Neue Useranzahl: " + data.users.length);
     } else {
         res.status(400).send("Dieser Name wird schon verwendet / Es wurde kein Name angegeben");
     }
 });
-
-
 
 /*----------------------speziellen User ausgeben----------------------*/
 router.get('/:user_id', function(req, res) {
@@ -46,7 +49,7 @@ router.get('/', function(req, res) {
 /*----------------------Prüfe ob User vorhanden----------------------*/
 var validateUser = function(userName) {
     if (userName == "") {
-        console.log("userName ist leer! Oh nein!");
+        console.log("userName ist leer!");
         return false;
     }
 
