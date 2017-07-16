@@ -5,6 +5,7 @@ var fs = require('fs');
 var http = require ('http');
 var bodyparser = require('body-parser');
 const router = express.Router();
+var faye = require('faye');
 
 /*----------Dienstgeber Ziel definieren---------*/
 
@@ -16,6 +17,15 @@ var dgURL = dgHost + ':' +dgPort;
 const settings = {
     port: 8080
 };
+
+/*------------ Faye ----------- */
+
+var fayeservice = new faye.NodeAdapter({
+    mount:'/faye',
+    timeout: 45
+});
+
+var client = new faye.Client('http://localhost:8080/faye');
 
 /*---------Funktionen ---------*/
 
@@ -60,6 +70,9 @@ dn.post('/users', bodyparser.json(), function(req, res){
 //put Favorites
 dn.put('/favorites/:user_id', bodyparser.json(),function(req,res){
     var type = "search/movie";
+    var user_id = req.params.user_id;
+    var movie_name = req.body.movie;
+    
     var url2 = main + type + api_key_v3 + lang + q + req.body.movie + pages + adult_f;
     request(url2, function(err, response, body){
         if(err) return res.status(400).send(response);
@@ -82,9 +95,19 @@ dn.put('/favorites/:user_id', bodyparser.json(),function(req,res){
             },
             json : datas
         };
+        
 
         request(options,function(err,response,body){
             res.json(body)
+            if(body.Fehler == undefined){
+                  client.publish('/followUser/' + user_id , { text: 'Der User mit der ID ' + user_id + ' hat einen neuen Film mit dem Namen: '+movie_name+' in die Favoriten hinzugefügt!'}) 
+                    .then(function(){
+                    console.log('Message received by server');
+                  }, function(error){
+                    console.log('Error on publishing ' + error.message);
+                  });
+                }
+            
         });
     });
 });
@@ -414,6 +437,10 @@ dn.get('/movie/release/:r_movie_id', function(req, res){
 
 
 
-dn.listen(settings.port, function(){
+var server = dn.listen(settings.port, function(){
     console.log("Dienstnutzer ist nun auf Port "+settings.port+" verfügbar.");
 });
+
+
+
+fayeservice.attach(server);
