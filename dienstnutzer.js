@@ -9,9 +9,9 @@ var faye = require('faye');
 
 /*----------Dienstgeber Ziel definieren---------*/
 
-var dgHost ='http://localhost';
+var dgHost ='https://wba217.herokuapp.com';
 var dgPort =3000;
-var dgURL = dgHost + ':' +dgPort;
+var dgURL = dgHost;
 
 
 const settings = {
