@@ -27,6 +27,19 @@ var fayeservice = new faye.NodeAdapter({
 
 var client = new faye.Client('http://localhost:8080/faye');
 
+//+++++++++++++++++++++++++Request URL+++++++++++++++++++++++++
+
+var main = 'https://api.themoviedb.org/3/';
+var api_key_v3 = '?api_key=8e0b27a52deab0516e45b95a931a11fa';
+var api_key_v4 = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTBiMjdhNTJkZWFiMDUxNmU0NWI5NWE5MzFhMTFmYSIsInN1YiI6IjU5NDc5ZjFmYzNhMzY4MTZjNTAzY2QxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TokALfhXEbRIxLWJer78yYscW4T5b7MGt4QxEgBcJKQ';
+var adult_f = "&include_adult=false";
+var adult_t = "&include_adult=true";
+var pages = "&page=1";
+var lang = "&language=en-US";
+var q ="&query=";
+var sort_pop = "&sort_by=popularity.desc";
+
+
 /*---------Funktionen ---------*/
 
 //get Users
@@ -142,17 +155,6 @@ dn.delete('/users/:user_id/:movie', function(req, res){
     });
 });
 
-//+++++++++++++++++++++++++Request URL+++++++++++++++++++++++++
-
-var main = 'https://api.themoviedb.org/3/';
-var api_key_v3 = '?api_key=8e0b27a52deab0516e45b95a931a11fa';
-var api_key_v4 = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTBiMjdhNTJkZWFiMDUxNmU0NWI5NWE5MzFhMTFmYSIsInN1YiI6IjU5NDc5ZjFmYzNhMzY4MTZjNTAzY2QxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TokALfhXEbRIxLWJer78yYscW4T5b7MGt4QxEgBcJKQ';
-var adult_f = "&include_adult=false";
-var adult_t = "&include_adult=true";
-var pages = "&page=1";
-var lang = "&language=en-US";
-var q ="&query=";
-var sort_pop = "&sort_by=popularity.desc";
 
 //+++++++++++++++++++++++++GET Funktionen API++++++++++++++++++++++++++
 
