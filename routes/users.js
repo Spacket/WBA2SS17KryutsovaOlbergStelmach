@@ -46,7 +46,6 @@ router.get('/', function(req, res) {
     console.log("Hat geklappt");
 });
 
-
 /*---------------------- Film von Favourites löschen ----------*/ 
 router.delete('/:user_id/:movie', function(req,res){
     

@@ -146,7 +146,6 @@ dn.get('/discover_movie/:user_id', function(req, res){
 });
 
 // DEL Film aus FavListe
-
 dn.delete('/users/:user_id/:movie', function(req, res){
 
     var url = dgURL + '/users/' + parseInt(req.params.user_id) + "/" + req.params.movie;
