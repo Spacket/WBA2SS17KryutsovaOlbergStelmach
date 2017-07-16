@@ -46,6 +46,30 @@ router.get('/', function(req, res) {
     console.log("Hat geklappt");
 });
 
+
+/*---------------------- Film von Favourites löschen ----------*/ 
+router.delete('/:user_id/:movie', function(req,res){
+    
+    var p=0;
+
+    for(var i= 0; i<data.users.length; i++ ){
+        if(parseInt(req.params.user_id) === parseInt(data.users[i].user_id)){
+            for(var j=0; i<data.users[i].favorites.length; j++){
+              if((data.users[i].favorites[j].name).toLowerCase() == (req.params.movie).toLowerCase()){
+                  data.users[i].favorites[j] = {};
+                  res.status(200).type('text').send('Film gelöscht');
+                  p=1;
+              } 
+                                                               }
+            
+        }}
+    if (p==0){
+        res.status(400).type('text').send('Film/User nicht vorhanden ')
+    }
+    
+});
+
+
 /*----------------------Prüfe ob User vorhanden----------------------*/
 var validateUser = function(userName) {
     if (userName == "") {

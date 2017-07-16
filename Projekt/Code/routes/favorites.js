@@ -53,8 +53,24 @@ router.get("/genre/:user_id", function(req, res){
     }
 });
 
-/*----------------------Prüfe ob User vorhanden----------------------*/
+//---- Film entfernen  
+/*router.delete('/:user_id/', function(req, res){
 
+    for(var i=0; i<data.users.length ; i++){
+        if(parseInt(req.params.user_id) === parseInt(data.users[i].user_id)){
+            data.users[i].favorites.push({"name":{}});
+            console.log(data.users);
+            res.status(200).send(data.users[i].favorites);
+        }
+        
+            else{
+      res.status(400).type('text').send('Film/Favoritenliste nicht vorhanden !');
+    }
+    }
+
+  });*/
+
+/*----------------------Prüfe ob User vorhanden----------------------*/
 var validateUser = function(userName) {
     if (userName == "") {
         console.log("userName ist leer! Oh nein!");

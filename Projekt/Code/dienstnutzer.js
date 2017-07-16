@@ -17,7 +17,7 @@ const settings = {
     port: 8080
 };
 
-/*---------Funktionen Dienstgeber---------*/
+/*---------Funktionen ---------*/
 
 //get Users
 dn.get('/users',function(req, res){
@@ -89,7 +89,7 @@ dn.put('/favorites/:user_id', bodyparser.json(),function(req,res){
     });
 });
 
-// get favorite genre)
+// get favorite genre
 dn.get('/discover_movie/:user_id', function(req, res){
     request.get(dgURL +'/favorites/genre/'+req.params.user_id, function (error, response, body) {
         if(error) return res.status(400).send(error);
@@ -106,6 +106,16 @@ dn.get('/discover_movie/:user_id', function(req, res){
             }
         });
 
+    });
+});
+
+// DEL Film aus FavListe
+
+dn.delete('/users/:user_id/:movie', function(req, res){
+
+    var url = dgURL + '/users/' + parseInt(req.params.user_id) + "/" + req.params.movie;
+    request.delete(url, function(err, response, body){
+       res.json(body); 
     });
 });
 
