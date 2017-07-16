@@ -9,6 +9,9 @@ var favorites = require('./routes/favorites');
 var users = require('./routes/users');
 
 var app = express();
+const settings = {
+    port: process.env.Port || 3000
+};
 
 global.data = require('./routes/data');
 
