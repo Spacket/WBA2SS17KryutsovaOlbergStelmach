@@ -53,7 +53,7 @@ router.delete('/:user_id/:movie', function(req,res){
 
     for(var i= 0; i<data.users.length; i++ ){
         if(parseInt(req.params.user_id) === parseInt(data.users[i].user_id)){
-            for(var j=0; i<data.users[i].favorites.length; j++){
+            for(var j=0; j<data.users[i].favorites.length; j++){
               if((data.users[i].favorites[j].name).toLowerCase() == (req.params.movie).toLowerCase()){
                   data.users[i].favorites[j] = {};
                   res.status(200).type('text').send('Film gelöscht');
