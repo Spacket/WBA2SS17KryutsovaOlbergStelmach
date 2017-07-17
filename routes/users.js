@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const ressourceName = "users";
-var nextUserId = 2;
+var nextUserId = 1;
 
 /*----------------------Neuen User hinzufügen----------------------*/
 router.post('/',  function(req, res){
