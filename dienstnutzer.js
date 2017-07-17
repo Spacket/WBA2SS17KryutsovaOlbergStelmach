@@ -136,13 +136,26 @@ dn.get('/discover_movie/:user_id', function(req, res){
         if(error) return res.status(400).send(error);
 
         var genre = JSON.parse(response.body).genre;
+        
+        
+        /*    if(genre == "undefined"){
+            
+            var discover_movie = main +'discover/movie'+api_key_v3+'&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
+                request(discover_movie, function(error2, response2, body2){
+
+            }
+                        
+                        
+            */
+        
 
         var discover_movie = main +'discover/movie'+api_key_v3+'&language=en-US&with_genres=' + genre + '&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
         request(discover_movie, function(error2, response2, body2){
             if(!error2 && response2.statusCode==200){
                 var data2 = JSON.parse(body2);
                 var newData = [];
-                for(var i = 0; i < 10; i++) newData[i] = data2.results[i];
+                for(var i = 0; i < 10; i++) 
+                    newData[i] = data2.results[i];
                 res.send({"movies":newData});
             }
         });
@@ -162,34 +175,6 @@ dn.delete('/users/:user_id/:movie', function(req, res){
 
 //+++++++++++++++++++++++++GET Funktionen API++++++++++++++++++++++++++
 
-
-//----------------//Find specific movie [EXTERNAL via ID]
-dn.get('/:movie_id', function(req, res){
-    var movie_id = req.params.movie_id;
-    var type = "find/";
-    var type_2 = "&external_source=imdb_id";
-    var url = main + type + movie_id + api_key_v3 + lang + type_2;
-
-    request(url, function(error, response, body){
-        if(!error && response.statusCode==200){
-            var data = JSON.parse(body);
-            var obj = JSON.stringify(data);
-
-
-            fs.writeFile(__dirname+"/input_data.json",obj, function(err){
-                if (err)throw err;
-            });
-        }
-        fs.readFile("input_data.json", 'UTF8', function(err, rep){
-            if(rep){
-                res.type('json').send(rep);
-            }
-            else {
-                res.status(404).type("text").send("Film kann nicht gefunden werden!");
-            }
-        });
-    });
-});
 
 //Find specific movie [INTERNAL]
 dn.get('/search/movie/:movie_title', function(req, res){
@@ -441,6 +426,31 @@ dn.get('/movie/release/:r_movie_id', function(req, res){
     });
 });
 
+// get random movie (Discover by best rating)
+dn.get('/discover_movies', function(req, res){
+    
+    var discover_movie = 'https://api.themoviedb.org/3/discover/movie?api_key=8e0b27a52deab0516e45b95a931a11fa&language=enUS&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
+
+    request(discover_movie, function(error, response, body){
+        if(!error && response.statusCode==200){
+            var data = JSON.parse(body);
+            var obj = JSON.stringify(data);
+
+
+            fs.writeFile(__dirname+"/input_data.json",obj, function(err){
+                if (err)throw err;
+            });
+        }
+        fs.readFile("input_data.json", 'UTF8', function(err, rep){
+            if(rep){
+                res.type('json').send(rep);
+            }
+            else {
+                res.status(404).type("text").send("Keine passende Suchanfrage");
+            }
+        });
+    });
+});
 
 
 var server = dn.listen(settings.port, function(){
