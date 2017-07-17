@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const ressourceName = "users";
-var nextUserId = 1;
+var nextUserId = 2;
 
 /*----------------------Neuen User hinzufügen----------------------*/
 router.post('/',  function(req, res){
@@ -19,7 +19,7 @@ router.post('/',  function(req, res){
         data.users.push(newUser);
 
         console.log(data.users);
-        res.status(200).send( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + nextUserId});
+        res.status(200).send( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + nextUserId--});
 
         
 
