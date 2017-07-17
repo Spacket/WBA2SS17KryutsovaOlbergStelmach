@@ -7,18 +7,17 @@ var bodyparser = require('body-parser');
 const router = express.Router();
 var faye = require('faye');
 
-/*----------Dienstgeber Ziel definieren---------
+/*----------Dienstgeber Ziel definieren---------*/
 
 var dgHost ='https://wba217.herokuapp.com';
-var dgPort =3000;
 var dgURL = dgHost;
 
-/*-------Dienstgeber Lokal zu Testzwecken ------*/
+/*-------Dienstgeber Lokal zu Testzwecken ------
 
 var dgHost ='http://localhost';
 var dgPort =3000;
 var dgURL = dgHost + ':' +dgPort;
-
+*/
 
 const settings = {
     port: 8080
