@@ -5,16 +5,28 @@ const ressourceName = "favorites";
 /*----------------------Filme in Favorites speichern----------------------*/
 router.put('/:user_id', function(req,res){
     console.log(req.body);
+    var x = 0; 
     if(parseInt(req.params.user_id) >= data.users.length || parseInt(req.params.user_id) < 0){
         res.status(400).type('text').send('Fehler!!! Favorites existieren nicht');
     }
 
     for(var i=0; i<data.users.length ; i++){
         if(parseInt(req.params.user_id) === parseInt(data.users[i].user_id)){
-            data.users[i].favorites.push({"name":req.body.name, "genres":req.body.genres});
-            console.log(data.users);
-            res.status(200).send(data.users[i].favorites);
-        }
+console.log(data.users[i].favorites.length);
+             for(var c=0; c<data.users[i].favorites.length; c++){
+                 console.log("Funzt");
+                if(data.users[i].favorites[c].name == req.body.name){
+                    res.status(400).type('text').send('Fehler! Film schon vorhanden!');
+                    x = 1;
+                } 
+             } if(x==0){
+            
+                    data.users[i].favorites.push({"name":req.body.name, "genres":req.body.genres});
+                            console.log(data.users);
+                                res.status(200).send(data.users[i].favorites);
+        
+    }
+    }
     }
 });
 
