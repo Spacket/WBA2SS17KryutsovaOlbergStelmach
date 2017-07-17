@@ -19,7 +19,7 @@ router.post('/',  function(req, res){
         data.users.push(newUser);
 
         console.log(data.users);
-        res.status(200).send( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + nextUserId--});
+        res.status(200).send( { uri: req.protocol + "://" + req.headers.host + "/" + ressourceName + "/" + --nextUserId});
 
         
 
