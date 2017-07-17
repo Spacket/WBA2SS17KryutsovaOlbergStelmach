@@ -12,9 +12,7 @@ router.put('/:user_id', function(req,res){
 
     for(var i=0; i<data.users.length ; i++){
         if(parseInt(req.params.user_id) === parseInt(data.users[i].user_id)){
-console.log(data.users[i].favorites.length);
              for(var c=0; c<data.users[i].favorites.length; c++){
-                 console.log("Funzt");
                 if(data.users[i].favorites[c].name == req.body.name){
                     res.status(400).type('text').send('Fehler! Film schon vorhanden!');
                     x = 1;
